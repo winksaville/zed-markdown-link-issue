@@ -1,56 +1,65 @@
 # Testing markdown anchors
 
-It looks like markdown anchor links aren't working well, I see
-the following issues when viewing a markdown file in the zed
-preview mode (zed v1.10.0; the same links work on GitHub and in
-VS Code preview).
+Markdown links aren't working well in Zed's Markdown Preview. Version:
+- Zed 1.10.3 0c54c414d522234de7298039708ffe85a116892a  – /home/wink/.local/zed.app/libexec/zed-editor
+- OS: Arch Linux, KDE Plasma (Wayland)
 
-What works:
+## Expected behavior using GitHub with a Browser
 
-- A same-file fragment link: [Target section](#target-section)
-  scrolls this preview down to the heading near the bottom. But
-  then clicking the back arrow (left of the window tabs)
-  activates the raw README.md, scrolled to its cursor position,
-  instead of returning to the previous preview position.
+Here is a simple example of how Zed Markdown Preview should behave,
+while viewing this page on GitHub click on "test 1 line 50" below:
+  - GitHub will display test1.md with "test 1 line 50" at the top of the page
+  - [test 1 line 50](test1.md#test-1-line-50)
 
-What fails:
+## To test in Zed:
 
-- A link with just a file, [test 1](test1.md), opens the raw
-  file, not the preview.
-- A link with a file and fragment,
-  [test 1 line 50](test1.md#test-1-line-50), opens the raw file
-  at whatever the current cursor location is; it does not move
-  to the "test 1 line 50" heading.
-- Reference links with fragments behave the same way:
-  [this link][1] opens the raw test2.md and does not scroll to
-  the "test 2 line 100" heading.
+- Clone this repo: `git clone https://github.com/winksaville/zed-markdown-link-issue`
+- cd into the repo: `cd zed-markdown-link-issue`
+- Open README.md (the normal editor buffer)
+- Open this file in preview mode:
+  - Click on the eye icon upper right or
+  - Right click on this file's tab and from the menu select "Open Markdown Preview"
 
-line 28 (filler so the Target section below needs scrolling)
+## Tests when viewing in Markdown Preview
 
-line 30
+- T1: Fragment link (same file) [Target section](#target-section)
+  - Works
+- T2: A link with just a file, [test 1](test1.md)
+  - Fails: opens the raw file, not the preview.
+- T3: A link with a file and fragment [test 1 line 50](test1.md#test-1-line-50)
+  - Fails: opens the raw file at whatever the current cursor location is;
+    it does not move to the "test 1 line 50" heading.
+- T4: Reference links, [this link][1]
+  - Fails: same as T3.
+- T5: After T1 navigates the preview to Target section, click the back arrow (left of the tab bar).
+  - Fails: returns to raw file not the preview.
 
-line 32
+## Filler lines
 
-line 34
+line
 
-line 36
+line
 
-line 38
+line
 
-line 40
+line
 
-line 42
+line
 
-line 44
+line
 
-line 46
+line
 
-line 48
+line
 
-line 50
+line
+
+line
+
+line
 
 ## Target section
 
-Clicking [Target section](#target-section) above lands here.
+Clicking [Target section](#target-section) above should land here.
 
 [1]: test2.md#test-2-line-100
